@@ -18,27 +18,29 @@
 */
 
 
-/* Fonction cosh */
-function cosh(aValue)
+/* Fonction cosinus hyperbolique */
+function cosh(val)
 {
-   return (Math.pow(Math.E, aValue) + Math.pow(Math.E, -aValue)) / 2;
+   return (Math.pow(Math.E, val) + Math.pow(Math.E, -val)) / 2;
 }
 
-/* Fonction sinh */
-function sinh (arg)
+/* Fonction sinus hyperbolique */
+function sinh (val)
 {
-  return (Math.exp(arg) - Math.exp(-arg)) / 2;
+  return (Math.exp(val) - Math.exp(-val)) / 2;
 }
 
-/* Fonction tanh */
-function tanh (arg)
+/* Fonction tangente hyperbolique */
+function tanh (val)
 {
-  return (Math.exp(arg) - Math.exp(-arg)) / (Math.exp(arg) + Math.exp(-arg));
+  return (Math.exp(val) - Math.exp(-val)) / (Math.exp(val) + Math.exp(-val));
 }
 
 
 function main(general)
 {
+
+    champsResultat = document.getElementById('resultats');
 
 /* Script de calcul du filtre de Tchebyscheff */
 var ordre = document.general.inputN.value;
@@ -48,13 +50,12 @@ var impedance = document.general.inputRi.value;
 
     if (isNaN(ordre) || ordre>0)
     {
-        var att=document.createAttribute("class");
-        att.value="alert-success";
-        document.getElementById('result').setAttributeNode(att);
+
+        champsResultat.setAttribute('class','alert alert-info');
         var resultlabel = document.createTextNode("Resultats :");
-        document.getElementById('result').appendChild(resultlabel);
+        champsResultat.appendChild(resultlabel);
         var newLink = document.createElement('br');
-        document.getElementById('result').appendChild(newLink);
+        champsResultat.appendChild(newLink);
 
         var N = new Number(ordre); /* Ordre du filtre */
         var ak = new Array();
@@ -73,9 +74,9 @@ var impedance = document.general.inputRi.value;
         var Pi = new Number(Math.PI);
 
 
-
         /* Traduction de la fréquence de coupure en Hz */
-        Fc = Fc * 1000000;
+        Fc *= 1000; // MHz  ->  KHz
+        Fc *= 1000; // KHz  ->  Hz
 
 
         /* Calcul de Wc */
@@ -88,9 +89,12 @@ var impedance = document.general.inputRi.value;
         gamma = sinh(beta/(2*N));
 
         /* Calcul de R */
-        if ((N%2)!=0){
+        if ((N%2)!=0)
+        {
             R = 1;
-        }else{
+        }
+        else
+        {
             R = tanh(beta/4)*tanh(beta/4);
         }
 
@@ -98,30 +102,36 @@ var impedance = document.general.inputRi.value;
         Rn = R*Ri;
 
         /* Calcul de ak */
-        for(var k = 1; k<=N;k++){
+        for(var k = 1; k<=N;k++)
+        {
             ak[k] = Math.sin(((2*k-1)*Pi)/(2*N));
         }
 
         /* Calcul de bk */
-        for(k = 1; k<=N;k++){
+        for(k = 1; k<=N;k++)
+        {
             bk[k] = gamma*gamma + Math.sin((k)*Pi/N)*Math.sin((k)*Pi/N);
         }
 
         /* Calcul de gk */
         gk[1] = 2*ak[1]/gamma;
-        for(k=2;k<=N;k++){
+        for(k=2;k<=N;k++)
+        {
             gk[k] = (4*ak[k-1]*ak[k])/(bk[k-1]*gk[k-1]);
         }
 
         /* Calcul de la Bobine l */
-        for(k=1; k<=N ; k++){
+        for(k=1; k<=N ; k++)
+        {
             l[k] = (Ri*gk[k])/(Wc);
         }
 
         /* Calcul de la Capacité C */
-        for(k=1; k<=N ; k++){
+        for(k=1; k<=N ; k++)
+        {
             c[k] = gk[k]/((Ri*Wc));
         }
+
         var expr1="C[";
         var expr2="] = ";
         var expr3=" F et Rn = ";
@@ -129,29 +139,32 @@ var impedance = document.general.inputRi.value;
         var expr6=" H et Rn = ";
         /* Affichage des résultats sous forme Exponentielle */
         var res = new Number();
-        for(k=1; k<=N;k++){
-            if((k%2)!=0){
+
+        for(k=1; k<=N;k++)
+        {
+            if((k%2)!=0)
+            {
                 res = c[k];
                 var tchebir=expr1+k+expr2+res.toExponential()+expr3+Rn;
                 var newLinkText = document.createTextNode(tchebir);
-                document.getElementById('result').appendChild(newLinkText);
+                champsResultat.appendChild(newLinkText);
                 var newLink = document.createElement('br');
-                document.getElementById('result').appendChild(newLink);
-            }else{
+                champsResultat.appendChild(newLink);
+            }
+            else
+            {
                 res = l[k];
                 var tchebir=expr5+k+expr2+res.toExponential()+expr6+Rn;
                 var newLinkText = document.createTextNode(tchebir);
-                document.getElementById('result').appendChild(newLinkText);
+                champsResultat.appendChild(newLinkText);
                         var newLink = document.createElement('br');
-                document.getElementById('result').appendChild(newLink);
+                champsResultat.appendChild(newLink);
             }
         }
     }
     else{
-            var att=document.createAttribute("class");
-            att.value="alert-danger";
-            document.getElementById('result').setAttribute(att);
-            var resultlabel = document.createTextNode("Attention il y a des erreurs dans le formulaire");
-            document.getElementById('result').appendChild(resultlabel);
+            champsResultat.setAttribute('class','alert alert-danger');
+            var resultlabel = document.createTextNode("Veuillez remplir correctement les champs de données");
+            champsResultat.appendChild(resultlabel);
     }
 }
