@@ -1,35 +1,63 @@
-<!--
-   index.html
-   
-   This program is free software; you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation; either version 2 of the License, or
-   (at your option) any later version.
-   
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-   
-   You should have received a copy of the GNU General Public License
-   along with this program; if not, write to the Free Software
-   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-   MA 02110-1301, USA.
--->
 
-<html lang="fr">
-
+<!DOCTYPE html>
+<html>
 <head>
-    <title>Calcul de filtres</title>
-    <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="rsc/bootstrap/css/bootstrap.css">
 </head>
 
 <body>
+    <div class="container-fluid">
+        <div class="row">
+        <div class="col-md-8 col-md-offset-2" align="center">
+            <div class="jumbotron">
+  <h1>Calcul du filtre de Tchebychev</h1>
+  <p>Programme de calcul du filtre de Tchebychev</p>
 
-<h1>Calcul de filtres</h1>
-BLABLABLA ...
+</div>
 
-</body>
+            <form name="general" action="index.html">
+                <h4>Veuillez remplir les tous les champs</h4>
+                <hr>
+  <div class="form-group">
+    <label for="inpout">Valeur de l'ordre : N</label>
+      <div class="input-group col-xs-4">
+    <input type="number" name="inputN" class="form-control " id="inputN">
+          </div>
+  </div>
+  <div class="form-group">
+    <label for="inputAmax">Taux d'atténuation : Amax</label>
+      <div class="input-group col-xs-4 ">
+      <span class="input-group-addon">dB</span>
+    <input class="form-control" id="inputAmax" placeholder="">
+  </div>
+      </div>
+                <div class="form-group">
+                    <label for="inputFreqc">Frequence de coupure : Fc</label>
+                          <div class="input-group col-xs-4">
+      <span class="input-group-addon">MHz</span>
+    <input type="text" class="form-control" id="inputFreqc" placeholder="">
+                              </div>
+</div>
+                <div class="form-group">
+                    <label for="inputRi">Impédance : R1</label>
+                    <div class="input-group col-xs-4">
+                        <span class="input-group-addon">Ω</span>
+    <input type="text" class="form-control" id="inputRi" placeholder="">
+                        </div>
+</div>
+                  
 
-
-</html>
+  <input type="button" onclick="main(general)" value="Calculer" class="btn btn-success"> </input>
+            <input type="button" onclick="location.reload();" value="Tout effacer" class=" btn btn-danger">
+</form>
+            <br>
+            <div id="result"></div>
+            <br/>
+             </div>
+    </div>
+        </div>
+        <script src="rsc/app.js"></script>
+    
+    </body>
+    </html>
