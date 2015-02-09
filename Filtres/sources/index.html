@@ -7,6 +7,8 @@
     </head>
 
     <body role="document" style="padding-top:50px; padding-bottom:20px; margin-bottom:60px;">
+
+    <!-- barre de menu -->
         <nav class="navbar navbar-inverse navbar-fixed-top">
             <div class="container">
                 <div class="navbar-header">
@@ -27,50 +29,55 @@
                 </div>
             </div>
         </nav>
+
+        <!-- barre de titre -->
         <div class="jumbotron">
             <div class="container theme-showcase" role="main">
-                <h1>Calcul de filtre</h1>
-                <p>Programme de calcul de filtre</p>
+                <h1>Calcul de filtres</h1>
             </div>
         </div>
+
+        <!-- contenu de la page -->
         <div class="container">
             <div class="col-lg-4">
                 <form name="general" action="index.html">
                     <label class="radio-inline">
                         <div class="radio">
-                            <label><input type="radio" name="optradio">Filtre de Tchebychev</label>
+                            <label><input type="radio" name="optradio" checked>Filtre de Tchebychev</label>
                         </div>
                     </label>
-                        <label class="radio-inline">
+                <!--
+                    <label class="radio-inline">
                         <div class="radio disabled">
-                            <label><input type="radio" name="optradio" disabled="true">Filtre parfait</label>
+                            <label><input type="radio" name="optradio" disabled>Filtre parfait</label>
                         </div>
                     </label>
+                -->
 
                     <div class="form-group">
                         <label for="inpout">Valeur de l'ordre : N</label>
                         <div class="input-group">
-                            <input type="number" id="inputN" class="form-control" placeholder=" > 0 " value="1">
+                            <input type="number" min="1" id="inputN" class="form-control" value="1" data-bind="value:inputN" >
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="inputAmax">Taux d'atténuation : Amax</label>
                         <div class="input-group">
-                            <input class="form-control" id="inputAmax" placeholder="Atténuation" value="0">
+                            <input type="number" min="1" class="form-control" id="inputAmax" value="1" data-bind="value:inputAmax" >
                             <span class="input-group-addon">dB</span>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="inputFreqc">Fréquence de coupure : Fc</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" id="inputFreqc" placeholder="Fréquence" value="1000">
+                            <input type="number" min="1" class="form-control" id="inputFreqc" value="1000" data-bind="value:inputFreqc" >
                             <span class="input-group-addon">MHz</span>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="inputRi">Impédance : R1</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" id="inputRi" placeholder="Impédance" value="50">
+                            <input type="number" min="1" class="form-control" id="inputRi" value="50" data-bind="value:inputRi" >
                             <span class="input-group-addon">Ω</span>
                         </div>
                     </div>
@@ -78,14 +85,18 @@
                     <input type="button" onclick="location.reload();" value="Reset" class=" btn btn-lg btn-danger">
                 </form>
             </div>
-
             <div  class="col-lg-6">
-                <div id="resultats">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"> Résultats </h3>
+                    </div>
+                    <div class="panel-body">
+                        <div id="resultats"> </div>
+                    </div>
                 </div>
             </div>
         </div>
-
+        <!-- l'application -->
         <script src="rsc/app.js"></script>
-
     </body>
 </html>

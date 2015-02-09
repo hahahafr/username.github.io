@@ -42,20 +42,20 @@ function main(general)
 
     champsResultat = document.getElementById('resultats');
 
-/* Script de calcul du filtre de Tchebyscheff */
-var ordre = document.general.inputN.value;
-var attenuation = document.general.inputAmax.value;
-var freqCoup = document.general.inputFreqc.value;
-var impedance = document.general.inputRi.value;
+    // saisies
+    var ordre = document.general.inputN.value;
+    var attenuation = document.general.inputAmax.value;
+    var freqCoup = document.general.inputFreqc.value;
+    var impedance = document.general.inputRi.value;
 
-    if (isNaN(ordre) || ordre>0)
+    if ( isNaN(ordre) || isNaN(attenuation) || isNaN(freqCoup) || isNaN(impedance) || ordre <= 0 || attenuation <= 0 || freqCoup <= 0 || impedance <= 0)
     {
-
+        champsResultat.setAttribute('class','alert alert-danger');
+        champsResultat.innerHTML = "<p>Veuillez remplir correctement les champs de données</p>";
+    }
+    else
+    {
         champsResultat.setAttribute('class','alert alert-info');
-        var resultlabel = document.createTextNode("Resultats :");
-        champsResultat.appendChild(resultlabel);
-        var newLink = document.createElement('br');
-        champsResultat.appendChild(newLink);
 
         var N = new Number(ordre); /* Ordre du filtre */
         var ak = new Array();
@@ -132,39 +132,36 @@ var impedance = document.general.inputRi.value;
             c[k] = gk[k]/((Ri*Wc));
         }
 
-        var expr1="C[";
-        var expr2="] = ";
-        var expr3=" F et Rn = ";
-        var expr5="L[";
-        var expr6=" H et Rn = ";
         /* Affichage des résultats sous forme Exponentielle */
         var res = new Number();
+        resultats = '<table class="table table-bordered">'
+        resultats += '<thead> <tr>'
+        resultats += '<th> Ordre # </th>   <th> C </th>   <th> L </th>   <th> R </th>'
+        resultats += '</tr> </thead>'
+        resultats += '<tbody>';
 
-        for(k=1; k<=N;k++)
+        for(k=1; k<=N; k++)
         {
-            if((k%2)!=0)
+            resultats += "<tr> <td> " + k + "</td>";
+
+            if( (k%2) != 0 )
             {
-                res = c[k];
-                var tchebir=expr1+k+expr2+res.toExponential()+expr3+Rn;
-                var newLinkText = document.createTextNode(tchebir);
-                champsResultat.appendChild(newLinkText);
-                var newLink = document.createElement('br');
-                champsResultat.appendChild(newLink);
+                var aff = c[k].toPrecision(4);
+                resultats += "<td>"+ aff +" F </td>";
+                resultats += "<td> - </td>";
+                resultats += "<td>" + Rn.toFixed(4) + " Ω </td>";
             }
             else
             {
-                res = l[k];
-                var tchebir=expr5+k+expr2+res.toExponential()+expr6+Rn;
-                var newLinkText = document.createTextNode(tchebir);
-                champsResultat.appendChild(newLinkText);
-                        var newLink = document.createElement('br');
-                champsResultat.appendChild(newLink);
+                var aff = l[k].toPrecision(4);
+                resultats += "<td> - </td>";
+                resultats += "<td>" + aff + " H </td>";
+                resultats += "<td>" + Rn.toFixed(4) + " Ω </td>";
             }
+
+            resultats += "</tr>";
         }
-    }
-    else{
-            champsResultat.setAttribute('class','alert alert-danger');
-            var resultlabel = document.createTextNode("Veuillez remplir correctement les champs de données");
-            champsResultat.appendChild(resultlabel);
+        resultats += "</tbody> </table>";
+        champsResultat.innerHTML = resultats;
     }
 }
