@@ -137,14 +137,14 @@ function main(general)
 
             if( (k%2) != 0 )
             {
-                var aff = c[k].toPrecision(5);
+                var aff = c[k].toPrecision(3);
                 resultats += "<td>"+ aff +"  F </td>";
                 resultats += "<td> - </td>";
                 resultats += "<td>" + Rn + "  Ω </td>";
             }
             else
             {
-                var aff = l[k].toPrecision(5);
+                var aff = l[k].toPrecision(3);
                 resultats += "<td> - </td>";
                 resultats += "<td>" + aff + "  H </td>";
                 resultats += "<td>" + Rn + "  Ω </td>";
