@@ -39,11 +39,13 @@
 
         <!-- contenu de la page -->
         <div class="container">
+
+            <!-- saisies -->
             <div class="col-lg-4">
                 <form name="general" action="index.html">
                     <label class="radio-inline">
                         <div class="radio">
-                            <label><input type="radio" name="optradio" checked>Filtre de Tchebychev</label>
+                            <label><input type="radio" name="filtre" value="tchebychev" checked>Filtre de Tchebychev</label>
                         </div>
                     </label>
                 <!--
@@ -55,37 +57,44 @@
                 -->
 
                     <div class="form-group">
-                        <label for="inpout">Valeur de l'ordre : N</label>
+                        <label for="inpout"> N (ordre) : </label>
                         <div class="input-group">
-                            <input type="number" min="1" id="inputN" class="form-control" value="1" data-bind="value:inputN" >
+                            <input type="number" min="1" step="2" class="form-control" id="inputN" value="1" data-bind="value:inputN" >
+                            <span class="input-group-addon"></span>
                         </div>
                     </div>
+
                     <div class="form-group">
-                        <label for="inputAmax">Taux d'atténuation : Amax</label>
+                        <label for="inputAmax"> Amax (atténuation maximale) : </label>
                         <div class="input-group">
-                            <input type="number" min="1" class="form-control" id="inputAmax" value="1" data-bind="value:inputAmax" >
-                            <span class="input-group-addon">dB</span>
+                            <input type="number" min="0.1" step="0.1" class="form-control" id="inputAmax" value="1" data-bind="value:inputAmax" >
+                            <span class="input-group-addon"> dB </span>
                         </div>
                     </div>
+
                     <div class="form-group">
-                        <label for="inputFreqc">Fréquence de coupure : Fc</label>
+                        <label for="inputFreqc"> Fc (fréquence de coupure) : </label>
                         <div class="input-group">
                             <input type="number" min="1" class="form-control" id="inputFreqc" value="1000" data-bind="value:inputFreqc" >
-                            <span class="input-group-addon">MHz</span>
+                            <span class="input-group-addon"> MHz </span>
                         </div>
                     </div>
+
                     <div class="form-group">
-                        <label for="inputRi">Impédance : R1</label>
+                        <label for="inputRi"> R1 (impédance) : </label>
                         <div class="input-group">
                             <input type="number" min="1" class="form-control" id="inputRi" value="50" data-bind="value:inputRi" >
-                            <span class="input-group-addon">Ω</span>
+                            <span class="input-group-addon"> Ω </span>
                         </div>
                     </div>
+
                     <input type="button" onclick="main(general);" value="Valider" class="btn btn-lg btn-success"> </input>
-                    <input type="button" onclick="location.reload();" value="Reset" class=" btn btn-lg btn-danger">
+                    <input type="button" onclick="location.reload();" value="Reset" class=" btn btn-lg btn-danger"> </input>
                 </form>
             </div>
-            <div  class="col-lg-6">
+
+            <!-- resultats -->
+            <div  class="col-lg-8">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
                         <h3 class="panel-title"> Résultats </h3>
@@ -95,6 +104,7 @@
                     </div>
                 </div>
             </div>
+
         </div>
         <!-- l'application -->
         <script src="rsc/app.js"></script>

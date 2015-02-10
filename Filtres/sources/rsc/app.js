@@ -48,7 +48,7 @@ function main(general)
     var freqCoup = document.general.inputFreqc.value;
     var impedance = document.general.inputRi.value;
 
-    if ( isNaN(ordre) || isNaN(attenuation) || isNaN(freqCoup) || isNaN(impedance) || ordre <= 0 || attenuation <= 0 || freqCoup <= 0 || impedance <= 0)
+    if ( isNaN(ordre) || isNaN(attenuation) || isNaN(freqCoup) || isNaN(impedance) || ordre <= 0 || attenuation <= 0 || freqCoup <= 0 || impedance <= 0 || !( ordre % 2 ) )
     {
         champsResultat.setAttribute('class','alert alert-danger');
         champsResultat.innerHTML = "<p>Veuillez remplir correctement les champs de données</p>";
@@ -57,83 +57,79 @@ function main(general)
     {
         champsResultat.setAttribute('class','alert alert-info');
 
-        var N = new Number(ordre); /* Ordre du filtre */
         var ak = new Array();
-        var Amax = new Number(attenuation);/* Taux d'ondulation dans la bande */
-        var beta = new Number();
         var bk = new Array();
         var c = new Array();
-        var Fc = new Number(freqCoup); /* Fréquence de coupure FC */
-        var gamma = new Number();
         var gk = new Array();
         var l = new Array();
-        var Wc = new Number(); /* Pulsation de coupure */
-        var R = new Number();
-        var Ri = new Number(impedance);
-        var Rn = new Number();
-        var Pi = new Number(Math.PI);
-
+        var k = 0;
 
         /* Traduction de la fréquence de coupure en Hz */
         Fc *= 1000; // MHz  ->  KHz
         Fc *= 1000; // KHz  ->  Hz
 
+        var N = ordre; /* Ordre du filtre */
+        var Amax = attenuation;/* Taux d'ondulation dans la bande */
+        var Fc = freqCoup; /* Fréquence de coupure FC */
+        var Ri = impedance;
 
-        /* Calcul de Wc */
-        Wc = 2*Pi*Fc;
+
+        /* Pulsation de coupure */
+        Wc = 2 * Math.PI * Fc;
 
         /* Calcul de beta */
-        beta = Math.log((cosh(Amax/17.37))/(sinh(Amax/17.37)));
+        beta = Math.log( ( cosh( Amax / 17.37 ) ) / ( sinh( Amax / 17.37 ) ) );
 
         /* calcul de gamma */
-        gamma = sinh(beta/(2*N));
+        gamma = sinh( beta / ( 2 * N ) );
 
         /* Calcul de R */
-        if ((N%2)!=0)
+        if ( ( N % 2 ) != 0 )
         {
             R = 1;
         }
         else
         {
-            R = tanh(beta/4)*tanh(beta/4);
+            R = tanh( beta / 4 ) * tanh( beta / 4 );
         }
 
         /* Calcul de Rn */
         Rn = R*Ri;
 
         /* Calcul de ak */
-        for(var k = 1; k<=N;k++)
+        for( k = 1; k <= N; k++ )
         {
-            ak[k] = Math.sin(((2*k-1)*Pi)/(2*N));
+            ak[k] = Math.sin( ( ( 2 * k-1 ) * Math.PI ) / ( 2 * N ) );
         }
 
         /* Calcul de bk */
-        for(k = 1; k<=N;k++)
+        for( k = 1; k <= N; k++ )
         {
-            bk[k] = gamma*gamma + Math.sin((k)*Pi/N)*Math.sin((k)*Pi/N);
+            bk[k] = gamma * gamma + Math.sin( k * Math.PI / N ) * Math.sin( k * Math.PI / N );
         }
 
         /* Calcul de gk */
-        gk[1] = 2*ak[1]/gamma;
-        for(k=2;k<=N;k++)
+        gk[1] = 2 * ak[1] / gamma;
+
+        for( k = 2; k <= N ; k++ )
         {
-            gk[k] = (4*ak[k-1]*ak[k])/(bk[k-1]*gk[k-1]);
+            gk[k] = ( 4 * ak[k-1] * ak[k] ) / ( bk[k-1] * gk[k-1] );
         }
 
-        /* Calcul de la Bobine l */
-        for(k=1; k<=N ; k++)
+        /* Calcul de L */
+        for( k = 1; k <= N ; k++ )
         {
-            l[k] = (Ri*gk[k])/(Wc);
+            l[k] = ( Ri * gk[k] ) / Wc ;
         }
 
-        /* Calcul de la Capacité C */
-        for(k=1; k<=N ; k++)
+        /* Calcul de C */
+        for( k = 1; k <= N ; k++ )
         {
-            c[k] = gk[k]/((Ri*Wc));
+            c[k] = gk[k] / ( ( Ri * Wc ) );
         }
+
 
         /* Affichage des résultats sous forme Exponentielle */
-        var res = new Number();
         resultats = '<table class="table table-bordered">'
         resultats += '<thead> <tr>'
         resultats += '<th> Ordre # </th>   <th> C </th>   <th> L </th>   <th> R </th>'
@@ -146,17 +142,17 @@ function main(general)
 
             if( (k%2) != 0 )
             {
-                var aff = c[k].toPrecision(4);
+                var aff = c[k].toPrecision(5);
                 resultats += "<td>"+ aff +" F </td>";
                 resultats += "<td> - </td>";
-                resultats += "<td>" + Rn.toFixed(4) + " Ω </td>";
+                resultats += "<td>" + Rn + " Ω </td>";
             }
             else
             {
-                var aff = l[k].toPrecision(4);
+                var aff = l[k].toPrecision(5);
                 resultats += "<td> - </td>";
                 resultats += "<td>" + aff + " H </td>";
-                resultats += "<td>" + Rn.toFixed(4) + " Ω </td>";
+                resultats += "<td>" + Rn + " Ω </td>";
             }
 
             resultats += "</tr>";
