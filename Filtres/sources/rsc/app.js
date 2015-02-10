@@ -48,7 +48,7 @@ function main(general)
     var freqCoup = document.general.inputFreqc.value;
     var impedance = document.general.inputRi.value;
 
-    if ( isNaN(ordre) || isNaN(attenuation) || isNaN(freqCoup) || isNaN(impedance) || ordre <= 0 || attenuation <= 0 || freqCoup <= 0 || impedance <= 0 || !( ordre % 2 ) )
+    if ( isNaN(ordre) || isNaN(attenuation) || isNaN(freqCoup) || isNaN(impedance) || ordre <= 0 || attenuation <= 0 || freqCoup <= 0 || impedance <= 0 /*|| !( ordre % 2 ) */)
     {
         champsResultat.setAttribute('class','alert alert-danger');
         champsResultat.innerHTML = "<p>Veuillez remplir correctement les champs de données</p>";
@@ -57,34 +57,29 @@ function main(general)
     {
         champsResultat.setAttribute('class','alert alert-info');
 
-        var ak = new Array();
-        var bk = new Array();
+        var Ak = new Array();
+        var Bk = new Array();
         var c = new Array();
-        var gk = new Array();
+        var Gk = new Array();
         var l = new Array();
         var k = 0;
 
         /* Traduction de la fréquence de coupure en Hz */
-        Fc *= 1000; // MHz  ->  KHz
-        Fc *= 1000; // KHz  ->  Hz
-
-        var N = ordre; /* Ordre du filtre */
-        var Amax = attenuation;/* Taux d'ondulation dans la bande */
-        var Fc = freqCoup; /* Fréquence de coupure FC */
-        var Ri = impedance;
+        freqCoup *= 1000; // MHz  ->  KHz
+        freqCoup *= 1000; // KHz  ->  Hz
 
 
-        /* Pulsation de coupure */
-        Wc = 2 * Math.PI * Fc;
+        /* pulsation */
+        Wc = 2 * Math.PI * freqCoup;
 
-        /* Calcul de beta */
-        beta = Math.log( ( cosh( Amax / 17.37 ) ) / ( sinh( Amax / 17.37 ) ) );
+        /* beta */
+        beta = Math.log( ( cosh( attenuation / 17.37 ) ) / ( sinh( attenuation / 17.37 ) ) );
 
-        /* calcul de gamma */
-        gamma = sinh( beta / ( 2 * N ) );
+        /* gamma */
+        gamma = sinh( beta / ( 2 * ordre ) );
 
-        /* Calcul de R */
-        if ( ( N % 2 ) != 0 )
+        /* calcul de R */
+        if ( ( ordre % 2 ) != 0 )
         {
             R = 1;
         }
@@ -93,39 +88,39 @@ function main(general)
             R = tanh( beta / 4 ) * tanh( beta / 4 );
         }
 
-        /* Calcul de Rn */
-        Rn = R*Ri;
+        /* calcul de Rn */
+        Rn = R * impedance;
 
-        /* Calcul de ak */
-        for( k = 1; k <= N; k++ )
+        /* calcul des Ak */
+        for( k = 1; k <= ordre; k++ )
         {
-            ak[k] = Math.sin( ( ( 2 * k-1 ) * Math.PI ) / ( 2 * N ) );
+            Ak[k] = Math.sin( ( ( 2 * k-1 ) * Math.PI ) / ( 2 * ordre ) );
         }
 
-        /* Calcul de bk */
-        for( k = 1; k <= N; k++ )
+        /* calcul des Bk */
+        for( k = 1; k <= ordre; k++ )
         {
-            bk[k] = gamma * gamma + Math.sin( k * Math.PI / N ) * Math.sin( k * Math.PI / N );
+            Bk[k] = gamma * gamma + Math.sin( k * Math.PI / ordre ) * Math.sin( k * Math.PI / ordre );
         }
 
-        /* Calcul de gk */
-        gk[1] = 2 * ak[1] / gamma;
+        /* calcul des Gk */
+        Gk[1] = 2 * Ak[1] / gamma;
 
-        for( k = 2; k <= N ; k++ )
+        for( k = 2; k <= ordre ; k++ )
         {
-            gk[k] = ( 4 * ak[k-1] * ak[k] ) / ( bk[k-1] * gk[k-1] );
+            Gk[k] = ( 4 * Ak[k-1] * Ak[k] ) / ( Bk[k-1] * Gk[k-1] );
         }
 
-        /* Calcul de L */
-        for( k = 1; k <= N ; k++ )
+        /* calcul des L */
+        for( k = 1; k <= ordre ; k++ )
         {
-            l[k] = ( Ri * gk[k] ) / Wc ;
+            l[k] = ( impedance * Gk[k] ) / Wc ;
         }
 
-        /* Calcul de C */
-        for( k = 1; k <= N ; k++ )
+        /* calcul des C */
+        for( k = 1; k <= ordre ; k++ )
         {
-            c[k] = gk[k] / ( ( Ri * Wc ) );
+            c[k] = Gk[k] / ( ( impedance * Wc ) );
         }
 
 
@@ -136,23 +131,23 @@ function main(general)
         resultats += '</tr> </thead>'
         resultats += '<tbody>';
 
-        for(k=1; k<=N; k++)
+        for(k=1; k<= ordre; k++)
         {
             resultats += "<tr> <td> " + k + "</td>";
 
             if( (k%2) != 0 )
             {
                 var aff = c[k].toPrecision(5);
-                resultats += "<td>"+ aff +" F </td>";
+                resultats += "<td>"+ aff +"  F </td>";
                 resultats += "<td> - </td>";
-                resultats += "<td>" + Rn + " Ω </td>";
+                resultats += "<td>" + Rn + "  Ω </td>";
             }
             else
             {
                 var aff = l[k].toPrecision(5);
                 resultats += "<td> - </td>";
-                resultats += "<td>" + aff + " H </td>";
-                resultats += "<td>" + Rn + " Ω </td>";
+                resultats += "<td>" + aff + "  H </td>";
+                resultats += "<td>" + Rn + "  Ω </td>";
             }
 
             resultats += "</tr>";
