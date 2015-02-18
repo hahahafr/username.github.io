@@ -125,7 +125,7 @@ function main(general)
 
 
         /* Affichage des résultats sous forme Exponentielle */
-        resultats = '<table class="table table-bordered">'
+        resultats = '<table class="table table-striped">'
         resultats += '<thead> <tr>'
         resultats += '<th> Ordre # </th>   <th> C </th>   <th> L </th>   <th> R </th>'
         resultats += '</tr> </thead>'
