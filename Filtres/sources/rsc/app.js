@@ -125,7 +125,8 @@ function main(general)
 
 
         /* Affichage des résultats sous forme Exponentielle */
-        resultats = '<table class="table table-striped">'
+        resultats = '<div class="table-responsive">'
+        resultats += '<table class="table table-bordered table-striped">'
         resultats += '<thead> <tr>'
         resultats += '<th> Ordre # </th>   <th> C </th>   <th> L </th>   <th> R </th>'
         resultats += '</tr> </thead>'
@@ -152,7 +153,7 @@ function main(general)
 
             resultats += "</tr>";
         }
-        resultats += "</tbody> </table>";
+        resultats += "</tbody> </div> </table>";
         champsResultat.innerHTML = resultats;
     }
 }
