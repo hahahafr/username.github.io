@@ -40,7 +40,7 @@
         <!-- contenu de la page -->
         <div class="container">
 
-            <div class="raw">
+            <div class="row">
                 <div class="col-lg-4">
                     <div class="form-group">
                         <label for="inputN"> N (ordre) : </label>
@@ -51,19 +51,21 @@
                     </div>
                 </div>
                 <div  class="col-lg-8">
-                    <p>
-                        Dans la <strong> valeur de l'ordre N </strong>, il faut saisir un entier qui correspond
-                        à l'efficacité avec laquelle on supprime les fréquences supérieures à la fréquence de coupure.
-                        Plus l'ordre est élevé, plus l'efficacité est élevée.
-                    </p>
-                    <p>
-                        Par exemple, pour un ordre 1, nous avons une pente du diagramme de bode du gain de -20dB par décade,
-                        et pour un ordre 2, nous avons -40dB.
-                    </p>
+                    <div  class="well">
+                        <p>
+                            Dans la <strong> valeur de l'ordre N </strong>, il faut saisir un entier qui correspond
+                            à l'efficacité avec laquelle on supprime les fréquences supérieures à la fréquence de coupure.
+                            Plus l'ordre est élevé, plus l'efficacité est élevée.
+                        </p>
+                        <p>
+                            Par exemple, pour un ordre 1, nous avons une pente du diagramme de bode du gain de -20dB par décade,
+                            et pour un ordre 2, nous avons -40dB.
+                        </p>
+                    </div>
                 </div>
             </div>
 
-            <div class="raw">
+            <div class="row">
                 <div class="col-lg-4">
                     <div class="form-group">
                         <label for="inputAmax"> Amax (atténuation maximale) : </label>
@@ -74,13 +76,15 @@
                     </div>
                 </div>
                 <div  class="col-lg-8">
-                    <p>
-                        Le <strong>taux d'atténuation</strong>
-                    </p>
+                    <div  class="well">
+                        <p>
+                            Le <strong>taux d'atténuation</strong>
+                        </p>
+                    </div>
                 </div>
             </div>
 
-            <div class="raw">
+            <div class="row">
                 <div class="col-lg-4">
                     <div class="form-group">
                         <label for="inputFreqc"> Fc (fréquence de coupure) : </label>
@@ -91,13 +95,15 @@
                     </div>
                 </div>
                 <div  class="col-lg-8">
-                    <p>
-                        La <strong>fréquence de coupure</strong>
-                    </p>
+                    <div  class="well">
+                        <p>
+                            La <strong>fréquence de coupure</strong>
+                        </p>
+                    </div>
                 </div>
             </div>
 
-            <div class="raw">
+            <div class="row">
                 <div class="col-lg-4">
                     <div class="form-group">
                         <label for="inputRi"> R1 (impédance) : </label>
@@ -108,21 +114,25 @@
                     </div>
                 </div>
                 <div  class="col-lg-8">
-                    <p>
-                        L'<strong>impédance</strong>
-                    </p>
+                    <div  class="well">
+                        <p>
+                            L'<strong>impédance</strong>
+                        </p>
+                    </div>
                 </div>
             </div>
 
-            <div class="raw">
+            <div class="row">
                 <div class="col-lg-4">
                     <input type="button" onclick="main(general);" value="Valider" class="btn btn-lg btn-success">
                     <input type="button" onclick="location.reload();" value="Reset" class=" btn btn-lg btn-danger">
                 </div>
                 <div  class="col-lg-8">
-                    <p>
-                        Les boutons
-                    </p>
+                    <div  class="well">
+                        <p>
+                            Les boutons
+                        </p>
+                    </div>
                 </div>
             </div>
 
