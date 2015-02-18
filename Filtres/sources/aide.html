@@ -39,8 +39,93 @@
 
         <!-- contenu de la page -->
         <div class="container">
-            <!-- @TODO -->
-            <!-- faire un tuto avec les champs de la page index.html -->
+
+            <div class="raw">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label for="inputN"> N (ordre) : </label>
+                        <div class="input-group">
+                            <input type="number" min="1" step="2" class="form-control" id="inputN" value="1" data-bind="value:inputN" >
+                            <span class="input-group-addon"></span>
+                        </div>
+                    </div>
+                </div>
+                <div  class="col-lg-8">
+                    <p>
+                        Dans la <strong> valeur de l'ordre N </strong>, il faut saisir un entier qui correspond
+                        à l'efficacité avec laquelle on supprime les fréquences supérieures à la fréquence de coupure.
+                        Plus l'ordre est élevé, plus l'efficacité est élevée.
+                    </p>
+                    <p>
+                        Par exemple, pour un ordre 1, nous avons une pente du diagramme de bode du gain de -20dB par décade,
+                        et pour un ordre 2, nous avons -40dB.
+                    </p>
+                </div>
+            </div>
+
+            <div class="raw">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label for="inputAmax"> Amax (atténuation maximale) : </label>
+                        <div class="input-group">
+                            <input type="number" min="0.1" step="0.1" class="form-control" id="inputAmax" value="1" data-bind="value:inputAmax" >
+                            <span class="input-group-addon"> dB </span>
+                        </div>
+                    </div>
+                </div>
+                <div  class="col-lg-8">
+                    <p>
+                        Le <strong>taux d'atténuation</strong>
+                    </p>
+                </div>
+            </div>
+
+            <div class="raw">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label for="inputFreqc"> Fc (fréquence de coupure) : </label>
+                        <div class="input-group">
+                            <input type="number" min="1" class="form-control" id="inputFreqc" value="1000" data-bind="value:inputFreqc" >
+                            <span class="input-group-addon"> MHz </span>
+                        </div>
+                    </div>
+                </div>
+                <div  class="col-lg-8">
+                    <p>
+                        La <strong>fréquence de coupure</strong>
+                    </p>
+                </div>
+            </div>
+
+            <div class="raw">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label for="inputRi"> R1 (impédance) : </label>
+                        <div class="input-group">
+                            <input type="number" min="1" class="form-control" id="inputRi" value="50" data-bind="value:inputRi" >
+                            <span class="input-group-addon"> Ω </span>
+                        </div>
+                    </div>
+                </div>
+                <div  class="col-lg-8">
+                    <p>
+                        L'<strong>impédance</strong>
+                    </p>
+                </div>
+            </div>
+
+            <div class="raw">
+                <div class="col-lg-4">
+                    <input type="button" onclick="main(general);" value="Valider" class="btn btn-lg btn-success">
+                    <input type="button" onclick="location.reload();" value="Reset" class=" btn btn-lg btn-danger">
+                </div>
+                <div  class="col-lg-8">
+                    <p>
+                        Les boutons
+                    </p>
+                </div>
+            </div>
+
         </div>
     </body>
 </html>
