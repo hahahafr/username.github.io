@@ -141,14 +141,14 @@ function main(general)
                 var aff = c[k].toPrecision(3);
                 resultats += "<td>"+ aff +"  F </td>";
                 resultats += "<td> - </td>";
-                resultats += "<td>" + Rn + "  Ω </td>";
+                resultats += "<td>" + Rn.toPrecision(2) + "  Ω </td>";
             }
             else
             {
                 var aff = l[k].toPrecision(3);
                 resultats += "<td> - </td>";
                 resultats += "<td>" + aff + "  H </td>";
-                resultats += "<td>" + Rn + "  Ω </td>";
+                resultats += "<td>" + Rn.toPrecision(2) + "  Ω </td>";
             }
 
             resultats += "</tr>";
